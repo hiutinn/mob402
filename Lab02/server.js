@@ -17,13 +17,13 @@ app.post('/', function (req, res) {
     console.log(typeof(operator))
     switch (operator) {
         case "+":
-            result = Number(num1) + Number(num2);
+            add(Number(num1),Number(num2));
             break;
         case "-":
-            result = Number(num1) - Number(num2);
+            substract(Number(num1), Number(num2));
             break;
         case "*":
-            result = Number(num1) * Number(num2);
+            multiply(Number(num1) , Number(num2));
             break;
     }
     // console.log(result);
