@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { add, substract, multiply } = require('./calculator');
+const { add, substract, multiply, devide } = require('./calculator');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -10,24 +10,27 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-    const num1 = req.body.num1;
-    const num2 = req.body.num2;
+    const num1 = Number(req.body.num1);
+    const num2 = Number(req.body.num2);
+
     const operator = req.body.operator;
     var result = 0;
-    console.log(typeof(operator))
     switch (operator) {
         case "+":
-            add(Number(num1),Number(num2));
+            result = add(num1, num2);
             break;
         case "-":
-            substract(Number(num1), Number(num2));
+            result = substract(num1, num2);
             break;
         case "*":
-            multiply(Number(num1) , Number(num2));
+            result = multiply(num1, num2);
+            break;
+        case "/":
+            result = devide(num1, num2);
             break;
     }
     // console.log(result);
-    res.write('<h1>Result: ' + result +'</h1>')
+    res.write('<h1>Result: ' + result + '</h1>')
 })
 
 app.listen(8080);

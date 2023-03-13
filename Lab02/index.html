@@ -17,10 +17,10 @@
                 <form method="post">
                     <div class="mb-3">
                         <label for="num1" class="form-label">Số thứ nhất</label>
-                        <input type="number" class="form-control" id="num1" name="num1">
+                        <input type="number" class="form-control" id="num1" name="num1" step="0.01">
                     </div>
                     <div class="mb-3">
-                        <label for="num2" class="form-label">Password</label>
+                        <label for="num2" class="form-label">Số thứ 2</label>
                         <input type="number" class="form-control" id="num2" name="num2">
                     </div>
                     <select class="form-select mb-3" name="operator" aria-label="Default select example">
@@ -28,6 +28,7 @@
                         <option value="+">Add(+)</option>
                         <option value="-">Substract(-)</option>
                         <option value="*">Multiply(x)</option>
+                        <option value="/">Devide(/)</option>
                       </select>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
