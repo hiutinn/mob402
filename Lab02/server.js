@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { add, substract, multiply, devide } = require('./calculator');
+const ejs = require('ejs');
 
 const app = express();
+app.engine('html', ejs.renderFile)
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.render(__dirname + '/index.html', {result: 0});
 });
 
 app.post('/', function (req, res) {
@@ -30,7 +32,7 @@ app.post('/', function (req, res) {
             break;
     }
     // console.log(result);
-    res.write('<h1>Result: ' + result + '</h1>')
+    res.render(__dirname + '/index.html', {result: result});
 })
 
 app.listen(8080);
