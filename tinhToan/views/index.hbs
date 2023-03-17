@@ -1,0 +1,29 @@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mt-5 m-auto ">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="num1" class="form-label">Số thứ nhất</label>
+                        <input type="number" class="form-control" id="num1" name="num1" value="{{num1}}" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="num2" class="form-label">Số thứ 2</label>
+                        <input type="number" class="form-control" id="num2" name="num2" value="{{num2}}" step="0.01">
+                    </div>
+                    <select class="form-select mb-3" name="operator" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option {{#if (eq operator "+")}} selected {{/if}} value="+">Add(+)</option>
+                        <option {{#if (eq operator "-")}} selected {{/if}} value="-">Substract(-)</option>
+                        <option {{#if (eq operator "*")}} selected {{/if}} value="*">Multiply(x)</option>
+                        <option {{#if (eq operator "/")}} selected {{/if}} value="/">Devide(/)</option>
+                      </select>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <h2 class="mt-5">Kết quả: {{result}}</h2>
+            </div>
+            
+        </div>
+
+    </div>
+
