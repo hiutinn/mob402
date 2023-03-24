@@ -1,0 +1,73 @@
+<h5 class="card-title">Thêm sản phẩm</h5>
+<a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/products/">Danh sách</a>
+<form onsubmit="return ValidateFileUpload()" action="/admin/products/create" method="post" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="name" class="form-label">Tên sản phẩm</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">Đơn giá</label>
+    <input type="number" class="form-control" id="price" name="price" required>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Ảnh</label>
+    <input type="file" class="form-control" id="image" name="image">
+  </div>
+  <div class="mb-3">
+    <label for="color" class="form-label">Màu sắc</label>
+    <input type="text" class="form-control" id="color" name="color">
+  </div>
+  <div class="mb-3">
+    <label for="color" class="form-label">Loại sản phẩm</label>
+    <input type="text" class="form-control" id="type" name="type">
+  </div>
+  <div class="mb-3">
+    <label for="color" class="form-label">Khách hàng</label>
+    <select name="user" id="" class="form-select">
+      {{#each users}}
+      <option value="{{this.id}}">{{this.lastname}}</option>
+      {{/each}}
+    </select>
+  </div>
+  {{!-- <div class="mb-3">
+    <label for="color" class="form-label">Tên khách hàng</label>
+    <select name="userName" id="" class="form-select">
+      {{#each users}}
+      <option value="{{this.lastname}}">{{this.lastname}}</option>
+      {{/each}}
+    </select>
+  </div> --}}
+  <button type="submit" class="btn btn-primary">Thêm</button>
+</form>
+<script type="text/javascript">
+  function ValidateFileUpload(event) {
+    event.preventDefault();
+    var fuData = document.getElementById('image');
+    var FileUploadPath = fuData.value;
+    //To check if user upload any file
+    if (FileUploadPath == '') {
+      alert("Please upload an image");
+    } else {
+      var Extension = FileUploadPath.substring(
+        FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+      //The file uploaded is an image
+      if (Extension == "gif" || Extension == "png" || Extension == "bmp"
+        || Extension == "jpeg" || Extension == "jpg" || Extension == "jfif") {
+        // To Display
+        if (fuData.files && fuData.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(fuData.files[0]);
+        }
+      }
+
+      //The file upload is NOT an image
+      else {
+        alert("Photo only allows file types of GIF, PNG, JPG, JPEG, JFIF and BMP. ");
+        return;
+      }
+    }
+  }
+</script>

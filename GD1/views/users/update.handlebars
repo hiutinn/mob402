@@ -1,0 +1,85 @@
+<h5 class="card-title">Thêm người dùng</h5>
+<a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/users/">Danh sách</a>
+<form name="update-form" action="" method="post" enctype="multipart/form-data">
+  {{#with user}}
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" name="email" required value="{{email}}"  onchange="resetError()">
+    <div class="text-danger mb-2 error" id="email-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="newpassword" class="form-label">** New Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <div class="mb-3">
+    <label for="firstname" class="form-label">Họ</label>
+    <input type="text" class="form-control" id="firstname" name="firstname" required value="{{firstname}}"  onchange="resetError()">
+    <div class="text-danger mb-2 error" id="firstname-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="lastname" class="form-label">Tên</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" required value="{{lastname}}"  onchange="resetError()">
+    <div class="text-danger mb-2 error" id="lastname-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Ảnh</label>
+    <input type="file" class="form-control" id="image" name="image">
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label me-3">Ảnh cũ</label>
+    <img src="{{image}}" alt="" width="200">
+  </div>
+  <button type="submit" class="btn btn-primary update-btn" data-id="{{id}}">Lưu</button>
+  {{/with}}
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+  $(document).ready(function () {
+    var email = document.querySelector("#email");
+    var password = document.querySelector("#password");
+    var repassword = document.querySelector("#repassword");
+    var firstname = document.querySelector("#firstname");
+    var lastname = document.querySelector("#lastname");
+
+    var errors = document.getElementsByClassName("error");
+
+    function resetError() {
+      for (var i = 0; i < errors.length; i++) {
+        errors[i].innerHTML = ""
+      }
+    }
+    $('.update-btn').click(function (event) {
+      if (email.value.length <= 0) {
+        document.querySelector("#email-error").innerHTML = "Hãy nhập email!";
+        email.focus();
+        return;
+      } else {
+        document.querySelector("#email-error").innerHTML = "";
+      }
+
+      if (firstname.value.length <= 0) {
+        document.querySelector("#firstname-error").innerHTML = "Hãy nhập họ!";
+        password.focus();
+        return;
+      } else {
+        document.querySelector("#firstname-error").innerHTML = "";
+      }
+
+      if (lastname.value.length <= 0) {
+        document.querySelector("#lastname-error").innerHTML = "Hãy nhập tên!";
+        password.focus();
+        return;
+      } else {
+        document.querySelector("#lastname-error").innerHTML = "";
+      }
+
+      event.preventDefault();
+      var userId = $(this).data('id');
+      var deleteForm = document.forms['update-form'];
+      deleteForm.action = '/admin/users/update/' + userId + '?_method=put';
+      deleteForm.submit();
+    });
+  });
+</script>

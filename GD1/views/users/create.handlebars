@@ -1,0 +1,127 @@
+<h5 class="card-title">Thêm người dùng</h5>
+<a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/users/">Danh sách</a>
+<form onsubmit="return ValidateFileUpload()" action="/admin/users/create" method="post" id="create-form" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control" id="email" name="email" required onchange="resetError()">
+    <div class="text-danger mb-2 error" id="email-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required onchange="resetError()">
+    <div class="text-danger mb-2 error" id="password-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">RePassword</label>
+    <input type="password" class="form-control" id="repassword" name="repassword" required onchange="resetError()">
+    <div class="text-danger mb-2 error" id="repassword-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="firstname" class="form-label">Họ</label>
+    <input type="text" class="form-control" id="firstname" name="firstname" required onchange="resetError()">
+    <div class="text-danger mb-2 error" id="firstname-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="lastname" class="form-label">Tên</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" required onchange="resetError()">
+    <div class="text-danger mb-2 error" id="lastname-error"></div>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Ảnh</label>
+    <input type="file" class="form-control" id="image" name="image">
+  </div>
+  <button type="button" class="btn btn-primary" id="btn-submit">Thêm</button>
+</form>
+
+<script type="text/javascript">
+  function ValidateFileUpload(event) {
+    event.preventDefault();
+    var fuData = document.getElementById('image');
+    var FileUploadPath = fuData.value;
+    //To check if user upload any file
+    if (FileUploadPath == '') {
+      alert("Please upload an image");
+    } else {
+      var Extension = FileUploadPath.substring(
+        FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+      //The file uploaded is an image
+      if (Extension == "gif" || Extension == "png" || Extension == "bmp"
+        || Extension == "jpeg" || Extension == "jpg" || Extension == "jfif") {
+        // To Display
+        if (fuData.files && fuData.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(fuData.files[0]);
+        }
+      }
+
+      //The file upload is NOT an image
+      else {
+        alert("Photo only allows file types of GIF, PNG, JPG, JPEG, JFIF and BMP. ");
+        return;
+      }
+    }
+  }
+</script>
+
+<script>
+  var email = document.querySelector("#email");
+  var password = document.querySelector("#password");
+  var repassword = document.querySelector("#repassword");
+  var firstname = document.querySelector("#firstname");
+  var lastname = document.querySelector("#lastname");
+
+  var errors = document.getElementsByClassName("error");
+
+  function resetError() {
+    for (var i = 0; i < errors.length; i++) {
+      errors[i].innerHTML = ""
+    }
+  }
+
+  document.querySelector("#btn-submit").onclick = function () {
+    if (email.value.length <= 0) {
+      document.querySelector("#email-error").innerHTML = "Hãy nhập email!";
+      email.focus();
+      return;
+    } else {
+      document.querySelector("#email-error").innerHTML = "";
+    }
+
+    if (password.value.length <= 0) {
+      document.querySelector("#password-error").innerHTML = "Hãy nhập mật khẩu!";
+      password.focus();
+      return;
+    } else {
+      document.querySelector("#password-error").innerHTML = "";
+    }
+
+    if (password.value !== repassword.value) {
+      document.querySelector("#repassword-error").innerHTML = "Mật khẩu không khớp!";
+      password.focus();
+      return;
+    } else {
+      document.querySelector("#repassword-error").innerHTML = "";
+    }
+
+    if (firstname.value.length <= 0) {
+      document.querySelector("#firstname-error").innerHTML = "Hãy nhập họ!";
+      password.focus();
+      return;
+    } else {
+      document.querySelector("#firstname-error").innerHTML = "";
+    }
+
+    if (lastname.value.length <= 0) {
+      document.querySelector("#lastname-error").innerHTML = "Hãy nhập tên!";
+      password.focus();
+      return;
+    } else {
+      document.querySelector("#lastname-error").innerHTML = "";
+    }
+
+    document.querySelector("#create-form").submit();
+  }
+</script>
