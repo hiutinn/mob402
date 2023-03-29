@@ -1,0 +1,26 @@
+{
+  "name": "mongo_ex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "baithoModel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DuyLeHong/express-hbs2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DuyLeHong/express-hbs2/issues"
+  },
+  "homepage": "https://github.com/DuyLeHong/express-hbs2#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.4",
+    "mongoose": "^7.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
