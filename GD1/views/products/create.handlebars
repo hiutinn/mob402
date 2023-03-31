@@ -1,6 +1,6 @@
 <h5 class="card-title">Thêm sản phẩm</h5>
 <a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/products/">Danh sách</a>
-<form onsubmit="return ValidateFileUpload()" action="/admin/products/create" method="post" enctype="multipart/form-data">
+<form action="/admin/products/create" method="post" enctype="multipart/form-data">
   <div class="mb-3">
     <label for="name" class="form-label">Tên sản phẩm</label>
     <input type="text" class="form-control" id="name" name="name" required>
@@ -39,35 +39,3 @@
   </div> --}}
   <button type="submit" class="btn btn-primary">Thêm</button>
 </form>
-<script type="text/javascript">
-  function ValidateFileUpload(event) {
-    event.preventDefault();
-    var fuData = document.getElementById('image');
-    var FileUploadPath = fuData.value;
-    //To check if user upload any file
-    if (FileUploadPath == '') {
-      alert("Please upload an image");
-    } else {
-      var Extension = FileUploadPath.substring(
-        FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
-      //The file uploaded is an image
-      if (Extension == "gif" || Extension == "png" || Extension == "bmp"
-        || Extension == "jpeg" || Extension == "jpg" || Extension == "jfif") {
-        // To Display
-        if (fuData.files && fuData.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(fuData.files[0]);
-        }
-      }
-
-      //The file upload is NOT an image
-      else {
-        alert("Photo only allows file types of GIF, PNG, JPG, JPEG, JFIF and BMP. ");
-        return;
-      }
-    }
-  }
-</script>

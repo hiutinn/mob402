@@ -4,14 +4,11 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Mã sản phẩm</th>
       <th scope="col">Tên sản phẩm</th>
       <th scope="col">Đơn giá</th>
       <th scope="col">Hình ảnh</th>
       <th scope="col">Màu sắc</th>
       <th scope="col">Loại sp</th>
-      <th scope="col">Mã người dùng</th>
-      <th scope="col">Tên người dùng</th>
       <th scope="col">Hành động</th>
     </tr>
   </thead>
@@ -19,17 +16,14 @@
     {{#each products}}
     <tr>
       <th scope="row">{{inc @index}}</th>
-      <td>{{this.id}}</td>
       <td>{{this.name}}</td>
       <td>{{this.price}}</td>
       <td><img src="{{this.image}}" width="80" alt=""></td>
       <td>{{this.color}}</td>
       <td>{{this.type}}</td>
-      <td>{{this.userId}}</td>
-      <td>{{this.userName}}</td>
       <td>
-        <a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/products/update/{{this.id}}">Sửa</a>
-        <button type="button" class="btn btn-danger mt-3 mb-3 delete-btn" data-id="{{this.id}}">Xóa</button>
+        <a type="button" class="btn btn-primary mt-3 mb-3" href="/admin/products/update/{{this._id}}">Sửa</a>
+        <button type="button" class="btn btn-danger mt-3 mb-3 delete-btn" data-id="{{this._id}}">Xóa</button>
       </td>
     </tr>
     {{/each}}

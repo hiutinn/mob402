@@ -26,26 +26,8 @@
     <label for="color" class="form-label">Loại sản phẩm</label>
     <input type="text" class="form-control" id="type" name="type" value="{{product.type}}" required>
   </div>
-  <div class="mb-3">
-    <label for="color" class="form-label">Mã khách hàng</label>
-    <select name="user" id="" class="form-select">
-      {{#each users}}
-      <option {{#if (eq ../product.userId this.id)}}selected{{/if}} value="{{this.id}}">{{this.lastname}}
-      </option>
-      {{/each}}
-    </select>
   </div>
-  {{!-- <div class="mb-3">
-    <label for="color" class="form-label">Tên khách hàng</label>
-    <select name="userName" id="" class="form-select">
-      {{#each users}}
-      <option {{#if (eq ../product.userName this.lastname)}}selected{{/if}} value="{{this.lastname}}">
-        {{this.lastname}}
-      </option>
-      {{/each}}
-    </select> --}}
-  </div>
-  <button type="button" class="btn btn-primary update-btn" data-id="{{product.id}}">Lưu</button>
+  <button type="button" class="btn btn-primary update-btn" data-id="{{product._id}}">Lưu</button>
 
 </form>
 

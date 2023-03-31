@@ -2,20 +2,20 @@ const Product = require('../../models/ProductModel')
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const userController = require('./UserController');
-var products = 
-[
-    
-];
+const mongoose = require('mongoose');
 
-exports.productindex = (req, res) => {
-    res.render('products/index', { layout: "main", products: products, page: "products" });
-}
+const uri = "mongodb+srv://hieuntph22081:ee2IcQpVd8S5SAn8@cluster0.hz05q9o.mongodb.net/?retryWrites=true&w=majority";
 
-exports.productcreate = (req, res) => {
-    var users = userController.users;
-    console.log(users);
-    res.render('products/create', {layout: "main", page: "products"});
+    exports.index = async (req, res) => {
+        await mongoose.connect(uri);
+        await Product.find().lean()
+            .then(products => {
+                res.render('products/index', { layout: "main", products: products, page: "products" });
+            })
+    }
+
+exports.create = (req, res) => {
+    res.render('products/create', { layout: "main", page: "products" });
 }
 
 // SET STORAGE
@@ -57,13 +57,10 @@ var imageUpload = multer({
             cb(null, true)
         }
     },
-    // limits: {
-    //     fileSize: 1024 * 1024
-    // }
 })
 
-exports.productstore = (req, res) => {
-
+exports.store = async (req, res) => {
+    await mongoose.connect(uri);
     // Use multer to handle file uploads and save file path to database
     imageUpload.single('image')(req, res, (err) => {
         if (err) {
@@ -73,55 +70,71 @@ exports.productstore = (req, res) => {
             // Get the file path and add it to the product object
             var filePath = ""
             if (req.file) filePath = req.file.path.replace('public', '');
-            console.log(req.body);
             const name = req.body.name;
             const price = req.body.price;
             const image = filePath;
             const color = req.body.color;
-            const id = "sp" + Date.now();
-            const product = new Product(id, name, price, image, color);
-            products.push(product);
-            res.redirect('/admin/products')
+            const type = req.body.type;
+
+            const product = new Product({
+                name: name,
+                price: price,
+                image: image,
+                color: color,
+                type: type
+            });
+
+            product.save().then(() => {
+                res.redirect('/admin/products');
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).send('Error saving product');
+            });
         }
     });
 }
 
-exports.productdelete = (req, res) => {
-    console.log("asvavsas")
-    const removeIndex = products.findIndex((item) => item.id === req.params.id);
-    products.splice(removeIndex, 1);
+exports.delete = async (req, res) => {
+    await mongoose.connect(uri);
+    Product.findByIdAndDelete(req.params.id).then(() => {
+        res.redirect('/admin/products');
+    }).catch((error) => {
+        console.log(error);
+    });
     res.redirect('/admin/products')
 }
 
-exports.productupdate = (req, res) => {
-    const index = products.findIndex((item) => item.id === req.params.id);
-    var product = products[index];
-    res.render('products/update', { layout: "main", product: product, page: "products" })
+exports.update = async (req, res) => {
+    await mongoose.connect(uri);
+    Product.findById(req.params.id).lean().then((product) => {
+          res.render('products/update', { product: product, page: 'products' });
+      }).catch((error) => {
+        console.log(error);
+      });
 }
 
-exports.productsave = (req, res) => {
-    const index = products.findIndex((item) => item.id === req.params.id);
+exports.save = async (req, res) => {
+    await mongoose.connect(uri);
     imageUpload.single('image')(req, res, (err) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error uploading image');
         } else {
             // Get the file path and add it to the product object
-            var filePath = products[index].image;
+            var filePath = "";
             if (req.file) filePath = req.file.path.replace('public', '');
-            console.log(req.body);
-            const name = req.body.name;
-            const price = req.body.price;
-            const image = filePath;
-            const color = req.body.color;
-            const id = "sp" + Date.now();
-            products[index] = {
-                id: id,
-                name: name,
-                price: price,
-                image: image,
-                color: color,
-            }
+            Product.findById(req.params.id).then((product) => {
+                product.name = req.body.name;
+                product.price = req.body.price;
+                product.image = filePath ? filePath : product.image;
+                product.color = req.body.color;
+                product.type = req.body.type;          
+                return product.save();
+              }).then(() => {
+                res.redirect('/admin/products');
+              }).catch((error) => {
+                console.log(error);
+              });
             res.redirect('/admin/products')
         }
     });
