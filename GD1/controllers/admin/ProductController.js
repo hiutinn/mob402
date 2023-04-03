@@ -135,7 +135,6 @@ exports.save = async (req, res) => {
               }).catch((error) => {
                 console.log(error);
               });
-            res.redirect('/admin/products')
         }
     });
 }
