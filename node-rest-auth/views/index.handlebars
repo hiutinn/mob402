@@ -1,0 +1,18 @@
+{{#if isLoggedIn}}
+<div class="text-center mt-5">
+    <h2>Xin chào</h2>
+    <div class="mt-5 text-center d-flex justify-content-center align-items-center">
+        <a type="button" class="btn btn-dark me-2" href="/api/book">Danh sách</a>
+        <a type="button" class="btn btn-dark" href="/api/createBook">Thêm sách</a>
+    </div>
+</div>
+
+{{else}}
+<div class="text-center mt-5">
+    <h2>Bạn chưa đăng nhập</h2>
+    <div class="mt-5 text-center d-flex justify-content-center align-items-center">
+        <a type="button" class="btn btn-dark me-2" href="/api/signin">Đăng nhập</a>
+        <a type="button" class="btn btn-dark" href="/api/signup">Đăng ký</a>
+    </div>
+</div>
+{{/if}}

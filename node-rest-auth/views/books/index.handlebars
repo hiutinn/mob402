@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Isbn</th>
+      <th scope="col">Tên sách</th>
+      <th scope="col">Tác giả</th>
+      <th scope="col">Publisher</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each books}}
+    <tr>
+      <th>{{this.isbn}}</th>
+      <td>{{this.title}}</td>
+      <td>{{this.author}}</td>
+      <td>{{this.publisher}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
