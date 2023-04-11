@@ -1,0 +1,132 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lí sản phẩm</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Quản lí sản phẩm</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="col-md-6">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm sản phẩm</h3>
+                </div>
+                <form method="post" action="" id="create-form" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Tên sản phẩm</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
+                                required>
+                                <div class="text-danger" id="error-name"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Giá</label>
+                            <input type="number" class="form-control" id="price" name="price" placeholder="price"
+                                required>
+                                <div class="text-danger" id="error-price"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Số lượng</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity"
+                                placeholder="quantity" required>
+                                <div class="text-danger" id="error-quantity"></div>
+                        </div>
+                        {{!-- <div class="form-group">
+                            <label>Brand</label>
+                            <select class="form-control" name="brand_code">
+                                {{#each brands}}
+                                {{#with this}}
+                                <option value="{{code}}">{{name}}</option>
+                                {{/with}}
+                                {{/each}}
+                            </select>
+                        </div> --}}
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="image">Chọn ảnh</label>
+                                <input type="file" class="form-control-file" id="image" name="image">
+                                <div class="text-danger" id="error-image"></div>
+                            </div>
+                        </div>
+                        {{!-- <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="is_hot" name="is_hot" value="true">
+                            <label class="form-check-label" for="exampleCheck1">Hot</label>
+                        </div> --}}
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="button" id="btn-submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+    const form = document.querySelector('#create-form');
+    const nameInput = document.querySelector('#name');
+    const priceInput = document.querySelector('#price');
+    const quantityInput = document.querySelector('#quantity');
+    const imageInput = document.querySelector('#image');
+    const btn = document.querySelector('#btn-submit');
+    // Thêm sự kiện submit cho biểu mẫu
+    btn.addEventListener('click', (event) => {
+        // Ngăn chặn chuyển hướng khi submit
+        event.preventDefault();
+
+        if (nameInput.value.trim() === '') {
+            document.querySelector('#error-name').innerHTML = 'Vui lòng nhập họ tên.';
+            nameInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-name').innerHTML = '';
+        }
+
+        if (priceInput.value.trim() === '') {
+            document.querySelector('#error-price').innerHTML = 'Vui lòng nhập ngày sinh.';
+            priceInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-price').innerHTML = '';
+        }
+
+        if (quantityInput.value.trim() === '') {
+            document.querySelector('#error-quantity').innerHTML = 'Vui lòng nhập địa chỉ.';
+            quantityInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-quantity').innerHTML = '';
+        }
+
+        // Kiểm tra file upload
+        if (imageInput.value.trim() !== '') {
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/;
+            if (!allowedExtensions.exec(imageInput.value)) {
+                document.querySelector('#error-image').innerHTML = 'Chỉ chấp nhận file ảnh định dạng JPEG, JPG và PNG.';
+                return;
+            } else {
+                document.querySelector('#error-image').innerHTML = '';
+            }
+        }
+        // Nếu các trường đều hợp lệ, submit biểu mẫu
+        form.submit();
+    });
+</script>

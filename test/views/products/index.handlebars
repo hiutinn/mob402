@@ -1,0 +1,92 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+
+        <h1 class="m-0">Quản lí sản phẩm</h1>
+        <div>
+          <a href="/admin/products/create" type="button" class="btn btn-block btn-primary col-3 mt-3">Thêm</a>
+        </div>
+
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Quản lí sản phẩm</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12">
+              <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
+                aria-describedby="example1_info">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Ngày tạo</th>
+                    {{!-- <th>Hot</th> --}}
+                    <th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each data}}
+                  {{!-- <tr>{{this}}</tr> --}}
+                  <tr class="odd">
+                    {{#with this}}
+                    <td>{{inc @index}}</td>
+                    <td>{{name}}</td>
+                    <td><img width="80px" height="80px" src="{{image}}" alt=""></td>
+                    <td>{{price}}</td>
+                    <td>{{quantity}}</td>
+                    <td>{{create_at}}</td>
+                    {{!-- <td>{{#if is_hot}} Hot {{/if}}</td> --}}
+                    <td>
+                      <div class="d-flex">
+                        <a type="button" href="/admin/products/update/{{_id}}" class="btn btn-primary mr-3">Sửa</a>
+                        <a href="" class="btn btn-danger delete-btn" data-id="{{_id}}">Xóa</a>
+                      </div>
+                    </td>
+                    {{/with}}
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<form name="delete-form" method="post"></form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('.delete-btn').click(function (event) {
+
+      event.preventDefault();
+      var productId = $(this).data('id');
+      var deleteForm = document.forms['delete-form'];
+      if (confirm('Are you sure you want to delete this product?')) {
+        deleteForm.action = '/admin/products/' + productId + '?_method=delete';
+        deleteForm.submit();
+      }
+    });
+  });
+</script>
+<!-- /.content -->

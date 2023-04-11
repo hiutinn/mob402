@@ -1,0 +1,60 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Document</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .main-content {
+            min-height: 720px;
+            background: rgb(34, 195, 156);
+            background: linear-gradient(0deg, rgba(34, 195, 156, 1) 0%, rgba(241, 45, 253, 1) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        {{#if isLogedIn}}
+
+        {{else}}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                    <a href="auth/login" class="btn btn-outline-success me-2" type="submit">Đăng nhập</a>
+                    <a href="auth/signup" class="btn btn-outline-success" type="submit">Đăng ký</a>
+                </div>
+            </div>
+        </nav>
+        {{/if}}
+    </header>
+    <div class="main-content text-center pt-5 text-white">
+        <h2 class="mt-5">Sues</h2>
+        <p>Chào mừng đến với trang quản lý của sues</p>
+        <div class="mt-4">
+            <a href="admin/products" class="btn btn-dark">Trang quản lý</a>
+            <a href="profile" class="btn btn-dark">Thông tin cá nhân</a>
+        </div>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>

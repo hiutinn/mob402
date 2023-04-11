@@ -1,0 +1,241 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lí người dùng</h1>
+                <div>
+                    <a href="/admin/users" type="button" class="btn btn-block btn-primary col-3 mt-3">Danh sách</a>
+                </div>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Quản lí người dùng</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm người dùng</h3>
+                </div>
+                <form id="create-form" method="post" action="/admin/users/create" enctype="multipart/form-data">
+                    <div class="error-message"></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email"
+                                required>
+                            <div class="text-danger" id="error-email"></div>
+                            <div class="text-danger" id="error-email-server">{{error}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password" id="password" required
+                                placeholder="Enter password again">
+                            <div class="text-danger" id="error-password"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="repassword">Nhập lại mật khẩu</label>
+                            <input type="password" class="form-control" name="repassword" id="repassword" required
+                                placeholder="Enter password again">
+                            <div class="text-danger" id="error-repassword"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Họ Tên</label>
+                            <input type="text" class="form-control" name="name" id="name" required
+                                placeholder="Enter firstname">
+                            <div class="text-danger" id="error-name"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">Sinh nhật</label>
+                            <input type="date" class="form-control" name="birthday" id="birthday" required>
+                            <div class="text-danger" id="error-birthday"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" name="address" required
+                                placeholder="Enter address">
+                            <div class="text-danger" id="error-address"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required
+                                placeholder="Enter phone">
+                            <div class="text-danger" id="error-phone"></div>
+                        </div>
+                        <label for="">Giới tính</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" checked name="gender" id="genderMale" value="male">
+                                <label class="form-check-label" for="genderMale">
+                                    Nam
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="genderFemale"
+                                    value="female">
+                                <label class="form-check-label" for="genderFemale">
+                                    Nữ
+                                </label>
+                            </div>
+                            <div class="text-danger" id="error-gender"></div>
+                        </div>
+                        <label for="">Vai trò</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="roleAdmin" value="0">
+                                <label class="form-check-label" for="genderMale">
+                                    Admin
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" checked id="role" value="1">
+                                <label class="form-check-label" for="genderFemale">
+                                    Client
+                                </label>
+                            </div>
+                            <div class="text-danger" id="error-role"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="image">Chọn ảnh</label>
+                                <input type="file" class="form-control-file" id="image" name="image">
+                            </div>
+                        </div>
+                        <div class="text-danger" id="error-image"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+
+    // Lấy phần tử HTML chứa thông báo lỗi
+    const errorMessage = document.querySelector('#error-message');
+    const form = document.querySelector('#create-form');
+    const emailInput = document.querySelector('#email');
+    const passwordInput = document.querySelector('#password');
+    const repasswordInput = document.querySelector('#repassword');
+    const nameInput = document.querySelector('#name');
+    const birthdayInput = document.querySelector('#birthday');
+    const addressInput = document.querySelector('#address');
+    const phoneInput = document.querySelector('#phone');
+    const imageInput = document.querySelector('#image');
+    const btn = document.querySelector('#btn-submit');
+    // Thêm sự kiện submit cho biểu mẫu
+    btn.addEventListener('click', (event) => {
+        // Ngăn chặn chuyển hướng khi submit
+        event.preventDefault();
+        
+        // Kiểm tra các trường input và hiển thị thông báo lỗi
+
+        if (emailInput.value.trim() === '') {
+            document.querySelector('#error-email').innerHTML = 'Vui lòng nhập địa chỉ email.';
+            emailInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-email').innerHTML = '';
+        }
+
+        // Kiểm tra định dạng email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            document.querySelector('#error-email').innerHTML = 'Vui lòng nhập địa chỉ email hợp lệ.';
+            emailInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-email').innerHTML = '';
+        }
+
+        if (passwordInput.value.length < 6) {
+            document.querySelector('#error-password').innerHTML = 'Mật khẩu phải chứa ít nhất 6 kí tự.';
+            passwordInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-password').innerHTML = '';
+        }
+
+        if (passwordInput.value !== repasswordInput.value) {
+            document.querySelector('#error-repassword').innerHTML = 'Mật khẩu không khớp.';
+            repasswordInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-repassword').innerHTML = '';
+        }
+
+        if (nameInput.value.trim() === '') {
+            document.querySelector('#error-name').innerHTML = 'Vui lòng nhập họ tên.';
+            nameInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-name').innerHTML = '';
+        }
+
+        if (birthdayInput.value.trim() === '') {
+            document.querySelector('#error-birthday').innerHTML = 'Vui lòng nhập ngày sinh.';
+            birthdayInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-birthday').innerHTML = '';
+        }
+
+        if (addressInput.value.trim() === '') {
+            document.querySelector('#error-address').innerHTML = 'Vui lòng nhập địa chỉ.';
+            addressInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-address').innerHTML = '';
+        }
+
+        if (phoneInput.value.trim() === '') {
+            document.querySelector('#error-phone').innerHTML = 'Vui lòng nhập số điện thoại.';
+            phoneInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-phone').innerHTML = '';
+        }
+
+        // Kiểm tra định dạng số điện thoại
+        const phoneRegex = /^\d+$/;
+        if (!phoneRegex.test(phoneInput.value.trim())) {
+            document.querySelector('#error-phone').innerHTML = 'Số điện thoại không hợp lệ.';
+            phoneInput.focus();
+            return;
+        } else {
+            document.querySelector('#error-phone').innerHTML = '';
+        }
+
+        // Kiểm tra file upload
+        if (imageInput.value.trim() !== '') {
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/;
+            if (!allowedExtensions.exec(imageInput.value)) {
+                document.querySelector('#error-image').innerHTML = 'Chỉ chấp nhận file ảnh định dạng JPEG, JPG và PNG.';
+                return;
+            } else {
+                document.querySelector('#error-image').innerHTML = '';
+            }
+        }
+        // Nếu các trường đều hợp lệ, submit biểu mẫu
+        form.submit();
+    });
+
+</script>
